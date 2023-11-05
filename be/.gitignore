@@ -1,0 +1,9 @@
+# dependencies
+/node_modules
+
+# output folders
+/dist
+
+# testing working files
+/.nyc_output
+

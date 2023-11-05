@@ -1,0 +1,132 @@
+{
+    "env": {
+        "browser": true,
+        "es2020": true
+    },
+    "extends": [
+        "google",
+        "plugin:@typescript-eslint/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": 11,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "@typescript-eslint"
+    ],
+    "rules": {
+        "max-len": [
+            "error",
+            {
+                "code": 100,
+                "ignoreUrls": true,
+                "ignorePattern": "^\\s*import\\s.+\\sfrom\\s'.+';"
+            }
+        ],
+        "indent": [
+            "error",
+            2,
+            {
+                "SwitchCase": 1
+            }
+        ],
+        "new-cap": [
+            "error",
+            {
+                "newIsCap": true,
+                "capIsNew": false
+            }
+        ],
+        "require-jsdoc": [
+            "error",
+            {
+                "require": {
+                    "FunctionDeclaration": false,
+                    "MethodDefinition": false,
+                    "ClassDeclaration": false,
+                    "ArrowFunctionExpression": false,
+                    "FunctionExpression": false
+                }
+            }
+        ],
+        "valid-jsdoc": "off",
+        "@typescript-eslint/ban-types": [
+            "error",
+            {
+                "extendDefaults": false,
+                "types": {
+                    "String": {
+                        "message": "Use string instead",
+                        "fixWith": "string"
+                    },
+                    "Boolean": {
+                        "message": "Use boolean instead",
+                        "fixWith": "boolean"
+                    },
+                    "Number": {
+                        "message": "Use number instead",
+                        "fixWith": "number"
+                    },
+                    "Symbol": {
+                        "message": "Use symbol instead",
+                        "fixWith": "symbol"
+                    },
+                    "Function": {
+                        "message": "The `Function` type accepts any function-like value.\nIt provides no type safety when calling the function, which can be a common source of bugs.\nIt also accepts things like class declarations, which will throw at runtime as they will not be called with `new`.\nIf you are expecting the function to accept certain arguments, you should explicitly define the function shape."
+                    }
+                }
+            }
+        ],
+        "@typescript-eslint/no-var-requires": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "object-curly-spacing": [
+            "error",
+            "always"
+        ],
+        "space-before-function-paren": [
+            "error",
+            {
+                "anonymous": "always",
+                "named": "never",
+                "asyncArrow": "always"
+            }
+        ],
+        "comma-dangle": [
+            "error",
+            "never"
+        ],
+        "complexity": [
+            "error",
+            15
+        ],
+        "operator-linebreak": [
+            "error",
+            "before"
+        ],
+        "no-trailing-spaces": "error",
+        "prefer-template": "error",
+        "no-cond-assign": [
+            2,
+            "always"
+        ],
+        "no-multi-assign": "error",
+        "no-return-assign": [
+            "error",
+            "always"
+        ],
+        "no-magic-numbers": [
+            "error",
+            {
+                "ignore": [
+                    1,
+                    0,
+                    -1
+                ],
+                "ignoreArrayIndexes": true,
+                "enforceConst": true,
+                "detectObjects": true
+            }
+        ]
+    }
+}
