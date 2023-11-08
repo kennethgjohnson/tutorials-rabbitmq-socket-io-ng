@@ -1,16 +1,53 @@
 // Basic Express to get going.
+import { createServer } from 'node:http';
 import express, { Express, Request, Response } from 'express';
+import { Server, Socket } from 'socket.io';
 import dotenv from 'dotenv';
+import { join } from 'path';
+
 dotenv.config();
 export let appIsRunning = false;
 export const app: Express = express();
+export const server = createServer(app);
+export const io = new Server(server);
+
+
 const port = process.env.EXPRESS_PORT;
 
 app.get('/', (request: Request, response: Response) => {
-  response.send('BE Server is running!');
+  response.sendFile(join(__dirname, 'index.html'));
 });
 
-app.listen(port, () => {
+io.on('connection', (socket: Socket) => {
+  // Log connection
+  console.log(`a user connected, socket id: ${socket.id}`);
+  // Welcome user to chat
+  socket.emit('server message', `Welcome to the chat!`);
+  // Tell other users that a new user has connected
+  socket.broadcast.emit(
+    'user connected',
+    `${socket.id} joined to chat`
+  );
+
+  socket.on('chat message', (msg) => {
+    console.log(`message: ${socket.id} - ${msg}`);
+    io.emit('chat message', `${socket.id} - ${msg}`); // Sending message to all connected users.
+  });
+
+  // Log disconnection
+  socket.on('disconnect', () => {
+    // Log disconnection
+    console.log(`user disconnected, socket id: ${socket.id}`);
+    // Tell other users that a user has disconnected
+    socket.broadcast.emit(
+      'user disconnected',
+      `${socket.id} left chat`
+    );
+  });
+});
+
+
+server.listen(port, () => {
   console.log(`[server]: Server started at http://localhost:${port}`);
   // set appIsRunning to true after 5 seconds
   appIsRunning = true;
